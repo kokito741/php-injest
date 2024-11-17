@@ -1,9 +1,9 @@
 <?php
 // Database configuration
-$servername = "your_server_name"; // Replace with your server address or IP
-$username = "your_database_username";
-$password = "your_database_password";
-$dbname = "your_database_name";
+$servername = "142.93.163.115"; // Replace with actual IP or hostname
+$username = "api-injest-php";
+$password = "OVwljsvfSKR5OMoL";
+$dbname = "sensor-data";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -22,19 +22,23 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     $device_password = $_POST['device_password'];
 
     // Validate device
-    $sql = "SELECT * FROM `devices-list` WHERE device_id='$device_id' AND device_password='$device_password'";
+    $sql = "SELECT * FROM `devices-list` WHERE device-id='$device_id' AND device-password='$device_password'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        // Insert data into the database
-        $sql = "INSERT INTO `sensor_data` (device_id, temp, humidity, date_taken) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+    if ($result) {
+        if ($result->num_rows > 0) {
+            // Insert data into the database
+            $sql = "INSERT INTO `sensor-data` (device-id, temp, humidity, date-taken) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error inserting data: " . $conn->error;
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Invalid device ID or password";
         }
     } else {
-        echo "Invalid device ID or password";
+        echo "Error validating device: " . $conn->error;
     }
 } else {
     echo "Missing required POST data";

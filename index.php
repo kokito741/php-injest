@@ -22,7 +22,7 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     $device_password = $_POST['device_password'];
 
     // Validate device
-    $sql = "SELECT * FROM `devise-list` WHERE device-id='$device_id' AND device-password='$device_password'";
+    $sql = "SELECT * FROM `devise-list` WHERE `device-id`='$device_id' AND `device-password`='$device_password'";
     $result = $conn->query($sql);
 
     if ($result) {

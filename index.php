@@ -22,13 +22,13 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     $device_password = $_POST['device_password'];
 
     // Validate device
-    $sql = "SELECT * FROM `devices-list` WHERE device-id='$device_id' AND device-password='$device_password'";
+    $sql = "SELECT * FROM `devise-list` WHERE device-id='$device_id' AND device-password='$device_password'";
     $result = $conn->query($sql);
 
     if ($result) {
         if ($result->num_rows > 0) {
             // Insert data into the database
-            $sql = "INSERT INTO `sensor-data` (device-id, temp, humidity, date-taken) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
+            $sql = "INSERT INTO `device-sensors` (device-id, temp, humidity, date-taken) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
             } else {

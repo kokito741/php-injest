@@ -21,7 +21,7 @@ $date_taken = $_POST['date_taken'];
 $device_password = $_POST['device_password'];
 
 // Validate device
-$sql = "SELECT * FROM devices WHERE device_id='$device_id' AND device_password='$device_password'";
+$sql = "SELECT * FROM devise-list WHERE device_id='$device_id' AND device_password='$device_password'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

@@ -1,6 +1,6 @@
 <?php
 // Database configuration
-$servername = "http://database.kokito741.xyz";
+$servername = "142.93.163.115";
 $username = "api-injest-php";
 $password = "OVwljsvfSKR5OMoL";
 $dbname = "sensor-data";

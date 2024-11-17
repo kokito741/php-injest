@@ -28,7 +28,7 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     if ($result) {
         if ($result->num_rows > 0) {
             // Insert data into the database
-            $sql = "INSERT INTO `device-sensors` (`device-id`, `temp`, `humanity`, `date-taken`) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
+            $sql = "INSERT INTO `device-sensors` (`device-id`, `temp`, `humanity`, `data-taken`) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
             } else {

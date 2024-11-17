@@ -1,14 +1,41 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+<?php
+// Database configuration
+$servername = "http://database.kokito741.xyz";
+$username = "api-injest-php";
+$password = "OVwljsvfSKR5OMoL";
+$dbname = "sensor-data";
 
-use Cowsayphp\Farm;
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-header('Content-Type: text/plain');
-
-$text = "Set a message by adding ?message=<message here> to the URL";
-if(isset($_GET['message']) && $_GET['message'] != '') {
-	$text = htmlspecialchars($_GET['message']);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-$cow = Farm::create(\Cowsayphp\Farm\Cow::class);
-echo $cow->say($text);
+// Get data from request
+$device_id = $_POST['device_id'];
+$temp = $_POST['temp'];
+$humidity = $_POST['humidity'];
+$date_taken = $_POST['date_taken'];
+$device_password = $_POST['device_password'];
+
+// Validate device
+$sql = "SELECT * FROM devices WHERE device_id='$device_id' AND device_password='$device_password'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Insert data into the database
+    $sql = "INSERT INTO sensor_data.device-sensors (device_id, temp, humidity, date_taken) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+} else {
+    echo "Invalid device ID or password";
+}
+
+$conn->close();
+?>

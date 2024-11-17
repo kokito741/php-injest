@@ -1,5 +1,4 @@
 <?php
-<?php
 // Database configuration
 $servername = "http://database.kokito741.xyz";
 $username = "api-injest-php";

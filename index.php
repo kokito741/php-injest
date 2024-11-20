@@ -55,14 +55,6 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     echo "Missing required POST data";
 }
 
-// Check for devices that haven't posted recently and mark them as offline
-$timeout_minutes = 5; // Define timeout in minutes
-$sql = "UPDATE `devise-list` SET `device-status`='offline' WHERE `device-last-seen` < NOW() - INTERVAL $timeout_minutes MINUTE";
-if ($conn->query($sql) === TRUE) {
-    echo "Devices status updated based on inactivity";
-} else {
-    echo "Error updating devices status based on inactivity: " . $conn->error;
-}
 
 $conn->close();
 ?>

@@ -37,7 +37,7 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
             }
 
             // Update the device battery value and last seen timestamp
-            $sql = "UPDATE `devise-list` SET `device-battery`='$device_battery', `device-last-seen`=NOW(), `status`='online' WHERE `device-id`='$device_id'";
+            $sql = "UPDATE `devise-list` SET `device-battery`='$device_battery', `device-last-seen`=NOW(), `device-status`='online' WHERE `device-id`='$device_id'";
             if ($conn->query($sql) === TRUE) {
                 echo "Device battery and last seen updated successfully";
             } else {

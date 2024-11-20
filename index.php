@@ -4,6 +4,8 @@ $servername = "142.93.163.115"; // Replace with actual IP or hostname
 $username = "api-injest-php";
 $password = "OVwljsvfSKR5OMoL";
 $dbname = "sensor-data";
+// Set the default timezone to Sofia, Bulgaria 
+date_default_timezone_set('Europe/Sofia');
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -36,12 +36,12 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
                 echo "Error inserting data: " . $conn->error;
             }
 
-            // Update the device battery value
-            $sql = "UPDATE `devise-list` SET `device-battery`='$device_battery' WHERE `device-id`='$device_id'";
+            // Update the device battery value and last seen timestamp
+            $sql = "UPDATE `devise-list` SET `device-battery`='$device_battery', `device-last-seen`=NOW(), `status`='online' WHERE `device-id`='$device_id'";
             if ($conn->query($sql) === TRUE) {
-                echo "Device battery updated successfully";
+                echo "Device battery and last seen updated successfully";
             } else {
-                echo "Error updating device battery: " . $conn->error;
+                echo "Error updating device battery and last seen: " . $conn->error;
             }
         } else {
             echo "Invalid device ID or password";
@@ -51,6 +51,15 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     }
 } else {
     echo "Missing required POST data";
+}
+
+// Check for devices that haven't posted recently and mark them as offline
+$timeout_minutes = 5; // Define timeout in minutes
+$sql = "UPDATE `devise-list` SET `status`='offline' WHERE `device-last-seen` < NOW() - INTERVAL $timeout_minutes MINUTE";
+if ($conn->query($sql) === TRUE) {
+    echo "Devices status updated based on inactivity";
+} else {
+    echo "Error updating devices status based on inactivity: " . $conn->error;
 }
 
 $conn->close();

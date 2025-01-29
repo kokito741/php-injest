@@ -25,13 +25,13 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
     $device_battery = $_POST['device_battery'];
 
     // Validate device
-    $sql = "SELECT * FROM `devise-list` WHERE `device-id`='$device_id' AND `device-password`='$device_password'";
+    $sql = "SELECT * FROM `devise-list` WHERE `device_id`='$device_id' AND `device_password`='$device_password'";
     $result = $conn->query($sql);
 
     if ($result) {
         if ($result->num_rows > 0) {
             // Insert data into the database
-            $sql = "INSERT INTO `device-sensors` (`device-id`, `temp`, `humanity`, `data-taken`) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
+            $sql = "INSERT INTO `device-sensors` (`device_id`, `temp`, `humanity`, `data_taken`) VALUES ('$device_id', '$temp', '$humidity', '$date_taken')";
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
             } else {
@@ -39,7 +39,7 @@ if (isset($_POST['device_id'], $_POST['temp'], $_POST['humidity'], $_POST['date_
             }
 
             // Update the device battery value and last seen timestamp
-            $sql = "UPDATE `devise-list` SET `device-battery`='$device_battery', `device-last-seen`=NOW(), `device-status`='online' WHERE `device-id`='$device_id'";
+            $sql = "UPDATE `devise-list` SET `device_battery`='$device_battery', `device-last-seen`=NOW(), `device_status`='online' WHERE `device_id`='$device_id'";
             if ($conn->query($sql) === TRUE) {
                 echo "Device battery and last seen updated successfully";
             } else {
